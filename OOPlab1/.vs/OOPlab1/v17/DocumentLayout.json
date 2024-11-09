@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|solutionrelative:functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\OOPlab1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|solutionrelative:OOPlab1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|solutionrelative:functions.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C563E6DE-E3CC-4D6F-A147-5338E3A24151}|OOPlab1.vcxproj|solutionrelative:functions.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,40 +30,42 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "functions.h",
               "DocumentMoniker": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.h",
               "RelativeDocumentMoniker": "functions.h",
               "ToolTip": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.h",
               "RelativeToolTip": "functions.h",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABYAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-10-12T07:56:30.042Z"
+              "WhenOpened": "2024-10-12T07:56:30.042Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "functions.cpp",
               "DocumentMoniker": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.cpp",
               "RelativeDocumentMoniker": "functions.cpp",
               "ToolTip": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\functions.cpp",
               "RelativeToolTip": "functions.cpp",
-              "ViewState": "AgIAABcBAAAAAAAAAAAAACkBAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAEEBAAAAAAAAAAAAAEkBAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-10-12T07:56:16.56Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "OOPlab1.cpp",
               "DocumentMoniker": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\OOPlab1.cpp",
               "RelativeDocumentMoniker": "OOPlab1.cpp",
               "ToolTip": "C:\\Users\\evgen\\Documents\\\u041D\u0413\u0422\u0423\\\u041E\u041E\u041F\\OOPlab1\\OOPlab1.cpp",
               "RelativeToolTip": "OOPlab1.cpp",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAADgAAABXAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-09-14T07:56:18.318Z"
+              "WhenOpened": "2024-09-14T07:56:18.318Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void CalculateEmpiricDensityFunction(double*& sample, double*& frequencies, const int& N)
+void getSampleFrequencies(double*& sample, double*& frequencies, const int& N, const int& k)
 {
     double x_min = DBL_MAX;
     double x_max = DBL_MIN;
@@ -12,7 +12,6 @@ void CalculateEmpiricDensityFunction(double*& sample, double*& frequencies, cons
             x_max = sample[i];
     }
     double R = x_max - x_min;
-    int k = int(log2(N)) + 1;
     double h = R / k;
     int interval_index = 0;
     for (int i = 0; i < k; i++)
@@ -44,7 +43,7 @@ void CalculateEmpiricDensityFunction(double*& sample, double*& frequencies, cons
     //}
 }
 
-double CalculateEmpiricValue(double*& sample, const int& N, const char& value_desired)
+double calculateEmpiricSampleCharacteristic(double*& sample, const int& N, const char& value_desired)
 {
     double d = 0;
     double m = 0;
@@ -70,11 +69,10 @@ double CalculateEmpiricValue(double*& sample, const int& N, const char& value_de
         e += pow((sample[i] - m), 4);
     }
     e = e / (N * pow(d, 2)) - 3;
-    //std::cout << "Empiric values:\nm: " << m << "\td: " << d << "\ta: " << a << "\te: " << e << "\n";
     switch (value_desired)
     {
     default:
-        std::cout << "Empiric values:\nm: " << m << "\td: " << d << "\ta: " << a << "\te: " << e << "\n";
+        std::cout << "Empiric values:\nm: " << m << "\nd: " << d << "\na: " << a << "\ne: " << e << "\n\n";
         return DBL_MAX;
     case'M':
         return m;
@@ -87,22 +85,22 @@ double CalculateEmpiricValue(double*& sample, const int& N, const char& value_de
     }
 }
 
-double CalculateTheoreticStValue(const double& nu, const double& mu, const double& lambda,\
+double calculateTheoreticStandartCharacteristic(const double& nu, const double& mu, const double& lambda,\
     const char& value_desired, double x)
 {
     const double a = PI * tan(PI * nu / 2);
     const double K = sin(PI * nu) * (1 / PI + PI / (a * a)) + nu;
     const double C = (sin(PI * nu) / PI + nu) / K; // C := P
     double M, D, A, E;
-    M = 0;
+    M = mu; //mu lambda transformation
     D = 2 * (pow(PI * nu, 3) / 6 + (pow(PI * nu, 2) / 2 - 1) * sin(PI * nu) + PI * nu * cos(PI * nu)) \
         / (pow(PI, 3) * K) + 2 * pow(cos(PI * nu / 2), 2) * (2 / (a * a) + 2 * nu / a + nu * nu) / (a * K);
-    D *= pow(lambda, 2);
+    D *= pow(lambda, 2); //mu lambda transformation
     A = 0;
     E = 4 * ((pow(PI * nu, 5) / 20) + (sin(PI * nu) * (pow(PI * nu, 4) / 4 - 3 * pow(PI * nu, 2) + 6)) + (cos(PI * nu) * (pow(PI * nu, 3) - 6 * PI * nu))) / \
         (pow(D, 2) * pow(PI, 5) * K) + (2 * pow(cos(PI * nu / 2), 2) / (pow(D, 2) * K)) * \
         (24 / pow(a, 5) + 24 * nu / pow(a, 4) + 12 * pow(nu, 2) / pow(a, 3) + 4 * pow(nu, 3) / pow(a, 2) + pow(nu, 4) / pow(a, 1)) - 3;
-
+    E = (E+3)*pow(lambda,4) - 3; //mu lambda transformation
     switch (value_desired)
     {
     default:
@@ -136,22 +134,35 @@ double CalculateTheoreticStValue(const double& nu, const double& mu, const doubl
     }
 }
 
-double CalculateTheoreticMixValue(const double& nu1, const double& mu1, const double& lambda1, \
+double calculateTheoreticMixCharacteristic(const double& nu1, const double& mu1, const double& lambda1, \
     const double& nu2, const double& mu2, const double& lambda2, const double& p,\
     const char& value_desired, double x)
 {
     double M, D, A, E, F;
-    double d1, d2, e1, e2;
-    d1 = CalculateTheoreticStValue(nu1, mu1, lambda1, 'D');
-    d2 = CalculateTheoreticStValue(nu2, mu2, lambda2, 'D');
-    e1 = CalculateTheoreticStValue(nu1, mu1, lambda1, 'E');
-    e2 = CalculateTheoreticStValue(nu2, mu2, lambda2, 'E');
-    M = 0;
-    D = (1 - p) * d1 + p * d2;
-    A = 0;
-    E = ((1-p)*pow(d1,2)*(e1+3)+p * pow(d2, 2) * (e2 + 3))/pow(D,2) - 3;
-    F = (1 - p) * CalculateTheoreticStValue(nu1, mu1, lambda1, 'F', x) \
-        + p * CalculateTheoreticStValue(nu2, mu2, lambda2, 'F', x);
+    double m1,m2,d1, d2, e1, e2;
+    double a_first_part, a_second_part, e_first_part, e_second_part;
+    d1 = calculateTheoreticStandartCharacteristic(nu1, mu1, lambda1, 'D');
+    d2 = calculateTheoreticStandartCharacteristic(nu2, mu2, lambda2, 'D');
+    e1 = calculateTheoreticStandartCharacteristic(nu1, mu1, lambda1, 'E');
+    e2 = calculateTheoreticStandartCharacteristic(nu2, mu2, lambda2, 'E');
+    //e1 = calculateTheoreticStandartCharacteristic(nu1, 0, 1, 'E');
+    //e2 = calculateTheoreticStandartCharacteristic(nu2, 0, 1, 'E');
+    m1 = mu1;
+    m2 = mu2;
+    //p1 = 1-p; p2=p;
+    M = (1 - p) * m1 + p * m2;
+    //D=p_i(m_i^2 + d_i) - M^2
+    D = (1 - p) * (pow(m1,2)+d1) + p * (pow(m2, 2) + d2) - pow(M,2);
+
+    a_first_part = pow((m1 - M), 3) + 3 * (m1 - M) * d1;
+    a_second_part = pow((m2 - M), 3) + 3 * (m2 - M) * d2;
+    A = ((1 - p) * a_first_part + p * a_second_part) / pow(D, 1.5);
+
+    e_first_part = pow((m1 - M), 4) + 6 * pow((m1 - M), 2) * d1 + pow(d1, 2) * (e1 + 3);
+    e_second_part = pow((m2 - M), 4) + 6 * pow((m2 - M), 2) * d2 + pow(d2, 2) * (e2 + 3);
+    E = (((1 - p) * e_first_part + p * e_second_part) / pow(D, 2)) - 3;
+    F = (1 - p) * calculateTheoreticStandartCharacteristic(nu1, mu1, lambda1, 'F', x) \
+        + p * calculateTheoreticStandartCharacteristic(nu2, mu2, lambda2, 'F', x);
     switch (value_desired)
     {
     default:
@@ -177,7 +188,7 @@ void UniformDistribution(double*& sample, const int& N)
         sample[i] = double(rand()) / RAND_MAX;
 }
 
-void CosExpDistribution(const double& nu, const double& mu, const double& lambda, double*& sample, const int& N)
+void getCosExpDistributionSample(const double& nu, const double& mu, const double& lambda, double*& sample, const int& N)
 {
     const double a = PI * tan(PI * nu / 2);
     const double K = sin(PI * nu) * (1 / PI + PI / (a * a)) + nu;
@@ -213,7 +224,7 @@ void CosExpDistribution(const double& nu, const double& mu, const double& lambda
     }
 }
 
-void DistributionMixture(const double& nu1, const double& mu1, const double& lambda1, \
+void getDistributionMixtureSample(const double& nu1, const double& mu1, const double& lambda1, \
     const double& nu2, const double& mu2, const double& lambda2, const double& p, double*& sample, const int& N)
 {
     const double a1 = PI * tan(PI * nu1 / 2);
@@ -269,10 +280,8 @@ void DistributionMixture(const double& nu1, const double& mu1, const double& lam
     }
 }
 
-void EmpiricDistribution(double* frequencies, double* start_sample, double*& target_sample, const int& N)
+void getEmpiricDistributionSample(double* frequencies, double* start_sample, double*& target_sample, const int& N, const int& k)
 {
-    int k = int(log2(N)) + 1;
-    std::cout << "K:" << k << "\n";
     double x_min = DBL_MAX;
     double x_max = DBL_MIN;
     for (int i = 0; i < N; i++)
@@ -305,7 +314,7 @@ void EmpiricDistribution(double* frequencies, double* start_sample, double*& tar
     }
 }
 
-void OutputToFile(const char* file_name, const double* sample, const int& N)
+void writeSampleToFile(const char* file_name, const double* sample, const int& N)
 {
     std::ofstream output_file;
     output_file.open(file_name);
@@ -317,33 +326,32 @@ void OutputToFile(const char* file_name, const double* sample, const int& N)
     output_file.close();
 }
 
-int ManageInput(double& nu, double& mu, double& lambda, double& nu1, double& mu1, \
-    double& lambda1, double& nu2, double& mu2, double& lambda2, double& p, int& N) {
+void readParameters(double& nu, double& mu, double& lambda, double& nu1, double& mu1, \
+    double& lambda1, double& nu2, double& mu2, double& lambda2, double& p, int& N, double& x) {
     std::ifstream input_file;
     input_file.open("params.txt");
     if (!input_file.is_open())
     {
         std::cout << "Could not open the params file, exiting..";
-        return -1;
+        exit(0);
     }
-    input_file >> nu >> mu >> lambda >> N;
-    if (nu <= 0 || nu > 1 || N < 0)
+    input_file >> nu >> mu >> lambda >> N >> x;
+    if (nu <= 0 || nu > 1 || N < 0 || lambda <=0)
     {
         std::cout << "Incorrect parameters, exiting..";
-        return -1;
+        exit(0);
     }
     input_file >> nu1 >> mu1 >> lambda1 >> p;
-    if (nu1 <= 0 || nu1 > 1 || p <= 0 || p >= 1)
+    if (nu1 <= 0 || nu1 > 1 || p <= 0 || p >= 1 || lambda1 <= 0)
     {
         std::cout << "Incorrect parameters, exiting..";
-        return -1;
+        exit(0);
     }
     input_file >> nu2 >> mu2 >> lambda2;
-    if (nu2 <= 0 || nu2 > 1)
+    if (nu2 <= 0 || nu2 > 1 || lambda2 <= 0)
     {
         std::cout << "Incorrect parameters, exiting..";
-        return -1;
+        exit(0);
     }
     input_file.close();
-    return 0;
 }
